@@ -1,33 +1,44 @@
-// C 262 : 도 
-// D 294 : 레 
-// E 330 : 미 
-// F 349 : 파 
-// G 392 : 솔 
-// A 440 : 라 
-// B 494 : 시 
+#include "pitches.h" // pitches.h 탭의 코드를 포함
 
-#include "pitches.h"
+//학교종이 땡땡땡의 음을 나타내는 배열
+int melody[] = {
+    NOTE_G4, NOTE_G4, NOTE_A5, NOTE_A5,
+    NOTE_G4, NOTE_G4, NOTE_E4, 
+    NOTE_G4, NOTE_G4, NOTE_E4, NOTE_E4, NOTE_D4,
+    0,
+    NOTE_G4, NOTE_G4, NOTE_A5, NOTE_A5,
+    NOTE_G4, NOTE_G4, NOTE_E4,
+    NOTE_G4, NOTE_E4, NOTE_D4, NOTE_E4, NOTE_C4,
+    0
+};
 
-int piezoPin = 8; // 피에조의 ⊕극을 보드 8번에 연결 
-int tempo = 200; // duration 옵션 값 설정 
-int notes[25] = { NOTE_G1, NOTE_G1, NOTE_A1, NOTE_A1, NOTE_G1, NOTE_G1, 
-                  NOTE_E1, NOTE_G1, NOTE_G1, NOTE_E1, NOTE_E1, NOTE_D1, 
-                  NOTE_G1, NOTE_G1, NOTE_A1, NOTE_A1, NOTE_G1, NOTE_G1, 
-                  NOTE_E1, NOTE_G1, NOTE_E1, NOTE_D1, NOTE_E1, NOTE_C1 }; 
+//음 길이를 나타내는 배열
+int noteDurations[] = {
+    1,1,1,1,
+    1,1,2,
+    1,1,1,1,3,
+    1,
+    1,1,1,1,
+    1,1,2,
+    1,1,1,1,3,
+    1
+};
 
 void setup() {
-  pinMode (piezoPin, OUTPUT); 
+    for (int thisNote = 0; thisNote < 26; thisNote++) {
+        // 음의길이(박자) 계산(4/1, 4/2, 4/3)
+        int noteDuration = 250 * noteDurations[thisNote];
+        tone(8, melody[thisNote],noteDuration);
+        
+        // 피에조 스피커에서 소리가나는 것을 유지하기 위해 delay 시간
+        int pauseBetweenNotes = noteDuration * 1.30;
+        delay(pauseBetweenNotes);
+        
+        // 피에조 스피커의 소리를 끕니다. 
+        noTone(8);
+    }
 }
 
 void loop() {
-   for (int i = 0; i < 12; i++) { 
-     tone (piezoPin, notes[i], tempo); 
-     delay (300); 
-  } 
-  delay(100); // 멜로디 중간에 짧게 멈추는 용도 
 
-  for (int i = 12; i < 25; i++) { 
-     tone (piezoPin, notes[i], tempo); 
-     delay(300); 
-  } 
-}
+} 

@@ -15,6 +15,7 @@ void loop() {
   int swValue = digitalRead(swPin);
   
   // 시리얼 모니터로 출력 확인
+  Serial.print("   Push Button 값 : ");
   Serial.println(swValue);
   // 스위치의 값이 HIGH(1)이면 음 출력
   // PULL DOWN 저항이므로 버튼을 누르면 값이 HIGH(1)로 변경됨
